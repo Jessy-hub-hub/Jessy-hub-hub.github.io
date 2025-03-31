@@ -6,7 +6,7 @@
 .cart-overlay {
   position: absolute;
   top: 99.5px; /* Directly below the header */
-  right: 175px; /* Aligns with the container width */
+  right: 190px; /* Aligns with the container width */
   width: 265px;
   height: 60vh; /* Ensures a dynamic height */
   background-color: #fff;
