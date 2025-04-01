@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
-  base: "/", // Ensure correct base path
+  base: "/", // Ensures correct base path
   plugins: [react(), svgr()],
   server: {
     port: 3000,
@@ -16,7 +16,7 @@ export default defineConfig({
   },
   build: {
     outDir: "docs",
-    sourcemap: false, // Prevents eval() in source maps
+    sourcemap: false,
   },
   esbuild: {
     legalComments: "none",
@@ -26,7 +26,7 @@ export default defineConfig({
       minifyIdentifiers: true,
     },
   },
-  // 🔥 Fix for SPA refresh
+  // 🔥 Fix refresh issue for React Router
   resolve: {
     alias: {
       react: "react",
