@@ -13,7 +13,6 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
-    historyApiFallback: true, // Redirect unknown routes to index.html
   },
   build: {
     outDir: "docs",
@@ -26,5 +25,14 @@ export default defineConfig({
     esbuildOptions: {
       minifyIdentifiers: true,
     },
+  },
+  // 🔥 Fix for SPA refresh
+  resolve: {
+    alias: {
+      react: "react",
+    },
+  },
+  define: {
+    "process.env": {},
   },
 });
