@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
-  base: "/",
+  base: "/", // Ensure correct base path
   plugins: [react(), svgr()],
   server: {
     port: 3000,
@@ -13,17 +13,18 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
+    historyApiFallback: true, // Redirect unknown routes to index.html
   },
   build: {
     outDir: "docs",
     sourcemap: false, // Prevents eval() in source maps
   },
   esbuild: {
-    legalComments: "none", // Reduces extra comments that could trigger eval-like behaviors
+    legalComments: "none",
   },
   optimizeDeps: {
     esbuildOptions: {
-      minifyIdentifiers: true, // Avoids unnecessary code injection
+      minifyIdentifiers: true,
     },
   },
 });
