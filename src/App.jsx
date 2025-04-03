@@ -15,6 +15,7 @@ const AppContent = () => {
       <CartOverlay isOpen={isCartOverlayOpen} onClose={closeCartOverlay} />
       <div className="container">
         <Header />
+        {/* ✅ No extra BrowserRouter here */}
         <Routes>
           <Route path="/" element={<ProductListingPage />} />
           <Route path="/all" element={<ProductListingPage />} />
