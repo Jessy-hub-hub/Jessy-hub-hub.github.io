@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import CartOverlay from "./components/CartOverlay";
 import { CartProvider, useCart } from "./context/CartContext";
 import ProductListingPage from "./components/ProductListingPage";
@@ -31,9 +31,7 @@ const AppContent = () => {
 function App() {
   return (
     <CartProvider>
-      <Router>
-        <AppContent />
-      </Router>
+      <AppContent />
     </CartProvider>
   );
 }
