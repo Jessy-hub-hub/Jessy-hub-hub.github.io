@@ -105,10 +105,7 @@ const ProductDetailsPage = () => {
           </div>
 
           <div className="product-details-section">
-          <p className="product-name" data-testid="product-name">
-    {product.name}
-  </p>
-          
+            <h1 className="product-name">{product.name}</h1>
 
             {product.attributes.map((attribute) => (
               <div key={attribute.id} className="attribute-set">
