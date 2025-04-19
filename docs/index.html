@@ -5,11 +5,21 @@
     <link rel="icon" type="image/svg+xml" href="/scandiweb/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Frontend</title>
+
+    <!-- 🔁 Rewrite URL before React mounts -->
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const redirectPath = params.get("redirect");
+      if (redirectPath) {
+        history.replaceState(null, "", redirectPath);
+      }
+    </script>
+
+    <!-- 🔽 Load your React app -->
     <script type="module" crossorigin src="/assets/index-p5jVWl5N.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-CnvCNIgg.css">
   </head>
   <body>
     <div id="root"></div>
-
   </body>
 </html>
