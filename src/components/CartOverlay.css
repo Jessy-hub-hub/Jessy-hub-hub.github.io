@@ -1,6 +1,4 @@
-/* ======================== */
-/* Cart Overlay & Backdrop  */
-/* ======================== */
+
 
 /* Cart Overlay Container */
 .cart-overlay {
@@ -17,9 +15,6 @@
   overflow-y: auto;
   z-index: 1000;
   border-top: 1px solid #ccc; /* Joins visually with header */
-}
-.cart-overlay:hover {
-  border: 2px solid blue;
 }
 
 /* Header stays fixed at the top */
@@ -45,18 +40,13 @@
   top: 98px; /* Directly under header */
   left: 50.13%; /* Centered */
   width: 999px; /* Matches page content width */
-  height: 1445px; /* Stays within viewport */
+  height: 1316px; /* Stays within viewport */
   background-color: rgba(0, 0, 0, 0.5);
   transform: translateX(-50%);
   z-index: 900;
 }
-.backdrop:hover {
-  border: 2px solid blue;
-}
 
-/* ======================== */
-/* Cart Item Styling        */
-/* ======================== */
+
 
 /* Cart Overlay Heading */
 .cart-overlay h3 {

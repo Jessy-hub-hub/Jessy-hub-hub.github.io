@@ -4,12 +4,13 @@ import { useQuery } from "@apollo/client";
 import { GET_PRODUCT_BY_ID } from "../graphql/queries";
 import { useCart } from "../context/CartContext";
 import { slugify } from "../utils/slugify.js";
+import parse from "html-react-parser";  // Import html-react-parser for converting HTML string to React elements.
 import "./ProductDetailsPage.css";
 
-// Use the same slug function to generate URL slugs
+// Use the same slug function to generate URL slugs.
 const getSlug = (product) => slugify(product.name);
 
-// Updated getTestId: preserve original casing for capacity attribute
+// Updated getTestId: preserve original casing for capacity attribute.
 const getTestId = (attribute, value) => {
   const attrId = attribute.id.toLowerCase();
   const val =
@@ -118,9 +119,7 @@ const ProductDetailsPage = () => {
                       }
                       data-testid={getTestId(attribute, item.value)}
                       className={`attribute-button ${
-                        selectedAttributes[attribute.id] === item.value
-                          ? "selected"
-                          : ""
+                        selectedAttributes[attribute.id] === item.value ? "selected" : ""
                       }`}
                       style={
                         attribute.type === "swatch"
@@ -150,8 +149,9 @@ const ProductDetailsPage = () => {
               {product.inStock ? "Add to Cart" : "Out of Stock"}
             </button>
 
+            {/* Render product description as parsed HTML without using dangerouslySetInnerHTML */}
             <div data-testid="product-description" className="product-description">
-              {product.description}
+              {parse(product.description)}
             </div>
           </div>
         </div>

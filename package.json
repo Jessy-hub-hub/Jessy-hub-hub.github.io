@@ -12,16 +12,18 @@
     "preview": "vite preview",
     "postbuild": "copy .nojekyll docs",
     "predeploy": "npm run build",
-"deploy": "gh-pages -b main -d docs"
+    "deploy": "gh-pages -b main -d docs"
   },
   "dependencies": {
     "@apollo/client": "^3.12.4",
     "graphql": "^16.10.0",
     "graphql-request": "^7.1.2",
     "graphql-tag": "^2.12.6",
+    "html-react-parser": "^5.2.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.1.5"
+    "react-router-dom": "^7.1.5",
+    "react-toastify": "^11.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

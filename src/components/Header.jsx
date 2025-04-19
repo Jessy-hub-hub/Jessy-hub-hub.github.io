@@ -1,7 +1,7 @@
-// components/Header.js
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import cartImg from "../assets/shopping-cart.png"; // ← PNG import
 import "./Header.css";
 
 const Header = () => {
@@ -23,14 +23,15 @@ const Header = () => {
         <Link to="/tech" {...getCategoryLinkProps("tech")}>tech</Link>
         <Link to="/clothes" {...getCategoryLinkProps("clothes")}>clothes</Link>
       </nav>
-      <button data-testid="cart-btn" onClick={toggleCartOverlay}>
-        Cart{" "}
+
+      <div className="cart-container" onClick={toggleCartOverlay} data-testid="cart-btn">
+        <img src={cartImg} alt="Cart" className="cart-icon" />
         {itemCount > 0 && (
-          <span data-testid="cart-btn-count">
-            ({itemCount} {itemCount === 1 ? "Item" : "Items"})
+          <span className="cart-count" data-testid="cart-btn-count">
+            {itemCount}
           </span>
         )}
-      </button>
+      </div>
     </header>
   );
 };

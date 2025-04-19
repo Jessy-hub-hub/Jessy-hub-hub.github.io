@@ -19,7 +19,7 @@
 
 .header:hover,
 .header:focus {
-  border: 2px solid blue;  /* Blue border appears on hover/focus */
+  border: 2px colorless;  /* Blue border appears on hover/focus */
 }
 
 /* Navigation links styling */
@@ -49,21 +49,49 @@
   color: rgb(59, 231, 59);
 }
 
-.header button[data-testid="cart-btn"] {
-  background: none;
-  border: none;
+/* Cart Button (container) styling */
+.cart-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  font-size: 1rem;
-  font-weight: bold;
-  color: #fff;
-  background-color: #00aaff;
-  border-radius: 8px;
   padding: 0.5rem 1rem;
+  border-radius: 8px;
   transition: background-color 0.3s ease;
+  position: relative;  /* Important for positioning the count */
 }
 
+/* Cart Icon styling */
+.cart-icon {
+  width: 48px;  /* Set the width to 48px */
+  height: 48px; /* Set the height to 48px */
+  object-fit: contain; /* Keeps the image aspect ratio intact */
+  background: none; /* Clear background */
+}
+
+/* Item Count (number) on top of the icon */
+.cart-count {
+  position: absolute;
+  top: 3px;
+  right: 30px; /* Position it at the top-right corner of the icon */
+  color: black; /* Change the text color to something visible */
+  font-weight: bold;
+  font-size: 1rem;
+  display: inline-block;
+  background-color: transparent; /* No background */
+  padding: 0; /* No padding */
+  border-radius: 0; /* No rounded corners */
+}
+
+
+/* Hover state for cart container */
+.cart-container:hover {
+  background-color: transparent; /* No background on hover */
+}
+
+/* Hover effect for cart button */
 .header button[data-testid="cart-btn"]:hover {
-  background-color: #0088cc;
+  background-color: transparent;
 }
 
 .header button[data-testid="cart-btn"] span {

@@ -3,6 +3,8 @@ import { gql, useQuery } from "@apollo/client";
 import { useLocation, useNavigate } from "react-router-dom";
 import { slugify } from "../utils/slugify.js";
 import { useCart } from "../context/CartContext";
+import cartImg from "../assets/shopping-cart.png"; // PNG import
+import { toast, ToastContainer } from 'react-toastify';
 import "./ProductListingPage.css";
 
 const GET_CATEGORIES_AND_PRODUCTS = gql`
@@ -44,46 +46,63 @@ const ProductListingPage = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  // Determine the selected category from the URL path or default to "all"
   const selectedCategory = location.pathname.split("/").filter(Boolean)[0] || "all";
 
-  // Filter products based on the selected category
   const filteredProducts =
     selectedCategory === "all"
       ? data.products
       : data.products.filter((p) => p.category === selectedCategory);
 
   const handleProductClick = (product) => {
-    // Always navigate to the details page, regardless of stock status
     navigate(`/product/${getSlug(product)}`);
   };
 
   const handleQuickShop = (e, product) => {
     e.stopPropagation();
-
+  
     if (!product.inStock) return;
-
-    // Automatically select the first option for each attribute
+  
     const defaultOptions =
       product.attributes?.reduce((acc, attribute) => {
         if (attribute.items?.length) {
-          acc[attribute.id] = attribute.items[0].value;
+          acc[attribute.id] = {
+            value: attribute.items[0].value,
+            displayValue: attribute.items[0].displayValue,
+            type: attribute.type,
+          };
         }
         return acc;
       }, {}) || {};
-
-    // Use the first price available for the product
-    const productWithPrice = { ...product, price: product.prices[0] };
-
-    // Add the product to the cart and open the cart overlay
+  
+    const price = product.prices[0];
+    const productWithPrice = {
+      ...product,
+      price,
+      selectedAttributes: defaultOptions,
+    };
+  
     addToCart(productWithPrice, defaultOptions);
     openCartOverlay();
-
-    alert(`Quick Shop: Added ${product.name} to cart with default options!`);
+  
+    const attrString = Object.entries(defaultOptions)
+      .map(([key, val]) => `${key}: ${val.displayValue}`)
+      .join(", ");
+  
+    toast.success(
+      `Quick Shop: Added ${product.name} (${attrString}, Price: ${price.currency.symbol}${price.amount.toFixed(2)}) to cart.`,
+      {
+        autoClose: false, // No auto close
+        position: toast.POSITION.TOP_RIGHT, // Position on the screen
+        closeOnClick: true, // Allow closing the toast on click
+        pauseOnHover: true, // Pause when hover over toast
+      }
+    ); // Added missing semicolon here
   };
+  
 
   return (
     <div className="product-listing-page">
+      <ToastContainer />
       <h1 className="category-title">
         {selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)}
       </h1>
@@ -117,7 +136,7 @@ const ProductListingPage = () => {
                   className="quick-shop"
                   onClick={(e) => handleQuickShop(e, product)}
                 >
-                  🛒
+                  <img src={cartImg} alt="Quick Shop" className="cart-icon" />
                 </button>
               )}
             </div>

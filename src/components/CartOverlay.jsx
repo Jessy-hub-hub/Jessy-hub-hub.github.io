@@ -27,14 +27,15 @@ const CREATE_ORDER = gql`
 `;
 
 // Helper function to render attributes with a dynamic data-testid
-const renderAttribute = (attrKey, value) => {
-  const testId = `product-attribute-${attrKey}-${value}`;
+const renderAttribute = (attrKey, attrObj) => {
+  const testId = `product-attribute-${attrKey}-${attrObj.value}`;
   return (
     <p key={attrKey} className="cart-item-option" data-testid={testId}>
-      {attrKey}: {value}
+      {attrKey}: {attrObj.displayValue}
     </p>
   );
 };
+
 
 const CartOverlay = ({ isOpen, onClose }) => {
   const { cart, updateQuantity, clearCart, removeFromCart } = useCart();

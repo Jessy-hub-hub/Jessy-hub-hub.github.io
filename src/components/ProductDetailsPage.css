@@ -3,20 +3,17 @@
   position: relative;
   display: flex;
   width: 1000px;
-  height: 1080px;
+  height: 1300px;
   margin: -95px auto; /* Push content below the header */
   gap: 40px;
   padding-top: 100px;
   font-family: Arial, sans-serif;
   align-items: flex-start; /* Align product details at the top */
-  border: 1px solid transparent; /* Initially invisible border */
+  border: 1px solid #ccc;
   transition: border 0.3s ease;
 }
 
-/* On hover, show only a blue border (no box-shadow) */
-.product-details-page:hover {
-  border-color: blue;
-}
+
 
 /* Thumbnails - Now completely separate from .product-image-section */
 .thumbnails {
@@ -32,14 +29,13 @@
   width: 60px;
   height: 49px;
   cursor: pointer;
-  border: 1px solid #ccc;
   object-fit: cover;
   transition: transform 0.3s ease, border 0.3s ease;
   margin-left: 20px;
 }
 
 .thumbnail.active {
-  border: 2px solid blue;
+  /*border: 2px solid blue;*/
   transform: scale(1.1);
 }
 
@@ -53,9 +49,7 @@
   flex: 1; /* Ensures it takes up remaining space */
   margin-left: 100px; /* Moves right to avoid overlapping with thumbnails */
 }
-.product-frame:hover {
-  border-color: blue; /* Show blue border only on hover */
-}
+
 /* Main Image Wrapper */
 .main-image-wrapper {
   position: relative;
