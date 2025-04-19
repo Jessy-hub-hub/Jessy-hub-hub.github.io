@@ -108,7 +108,8 @@
 .product-name {
   font-family: 'Roboto', sans-serif;
   font-weight: 100;
-  font-size: 4px; /* minimum safe value */
+  font-size: 12px; /* minimum safe value */
+  line-height: 1; /* <-- Add this */
   transform: scale(0.7); /* visually half the size */
   transform-origin: left center;
   line-height: 0;
