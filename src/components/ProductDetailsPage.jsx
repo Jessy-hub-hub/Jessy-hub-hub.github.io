@@ -4,13 +4,11 @@ import { useQuery } from "@apollo/client";
 import { GET_PRODUCT_BY_ID } from "../graphql/queries";
 import { useCart } from "../context/CartContext";
 import { slugify } from "../utils/slugify.js";
-import parse from "html-react-parser";  // Import html-react-parser for converting HTML string to React elements.
+import parse from "html-react-parser";
 import "./ProductDetailsPage.css";
 
-// Use the same slug function to generate URL slugs.
 const getSlug = (product) => slugify(product.name);
 
-// Updated getTestId: preserve original casing for capacity attribute.
 const getTestId = (attribute, value) => {
   const attrId = attribute.id.toLowerCase();
   const val =
@@ -32,21 +30,19 @@ const ProductDetailsPage = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  // Find the product matching the slug regardless of stock status.
   const product = data.products.find((p) => getSlug(p) === slug);
-
   if (!product) return <p>Product not found.</p>;
 
   const handleImageNavigation = (direction) => {
-    if (direction === "prev") {
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex === 0 ? product.gallery.length - 1 : prevIndex - 1
-      );
-    } else {
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex === product.gallery.length - 1 ? 0 : prevIndex + 1
-      );
-    }
+    setCurrentImageIndex((prevIndex) =>
+      direction === "prev"
+        ? prevIndex === 0
+          ? product.gallery.length - 1
+          : prevIndex - 1
+        : prevIndex === product.gallery.length - 1
+        ? 0
+        : prevIndex + 1
+    );
   };
 
   const handleAttributeSelect = (attributeId, value) => {
@@ -57,11 +53,31 @@ const ProductDetailsPage = () => {
     selectedAttributes.hasOwnProperty(attr.id)
   );
 
+  const buildSelectedOptions = () => {
+    const options = {};
+    product.attributes.forEach((attr) => {
+      const selectedValue = selectedAttributes[attr.id];
+      const matchedItem = attr.items.find((item) => item.value === selectedValue);
+      if (matchedItem) {
+        options[attr.id] = {
+          value: matchedItem.value,
+          displayValue: matchedItem.displayValue,
+        };
+      }
+    });
+    return options;
+  };
+
   const handleAddToCart = () => {
-    // Prevent adding to cart if out of stock.
-    if (!product.inStock) return;
-    const productWithPrice = { ...product, price: product.prices[0] };
-    addToCart(productWithPrice, selectedAttributes);
+    if (!product.inStock || !allAttributesSelected) return;
+
+    const productWithPrice = {
+      ...product,
+      price: product.prices[0],
+    };
+
+    const options = buildSelectedOptions();
+    addToCart(productWithPrice, options);
   };
 
   return (
@@ -81,10 +97,7 @@ const ProductDetailsPage = () => {
               ))}
             </div>
             <div className="main-image-wrapper">
-              <button
-                className="arrow left-arrow"
-                onClick={() => handleImageNavigation("prev")}
-              >
+              <button className="arrow left-arrow" onClick={() => handleImageNavigation("prev")}>
                 &#9664;
               </button>
               <img
@@ -92,10 +105,7 @@ const ProductDetailsPage = () => {
                 src={product.gallery[currentImageIndex]}
                 alt={product.name}
               />
-              <button
-                className="arrow right-arrow"
-                onClick={() => handleImageNavigation("next")}
-              >
+              <button className="arrow right-arrow" onClick={() => handleImageNavigation("next")}>
                 &#9654;
               </button>
               {!product.inStock && (
@@ -149,7 +159,6 @@ const ProductDetailsPage = () => {
               {product.inStock ? "Add to Cart" : "Out of Stock"}
             </button>
 
-            {/* Render product description as parsed HTML without using dangerouslySetInnerHTML */}
             <div data-testid="product-description" className="product-description">
               {parse(product.description)}
             </div>

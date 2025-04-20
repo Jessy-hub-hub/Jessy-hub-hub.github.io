@@ -116,7 +116,8 @@ const CartOverlay = ({ isOpen, onClose }) => {
           ) : (
             cart.map((item) => {
               const slug = getSlug(item);
-              const attributesToRender = item.selectedAttributes || item.options;
+              const attributesToRender = item.options;
+
               return (
                 <div key={item.id} className="cart-item">
                   <div className="cart-item-details">
